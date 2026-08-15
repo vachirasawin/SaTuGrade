@@ -5,14 +5,10 @@ import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
+import { navbarLinks } from "@/app/utils/navbarLinksData";
+
 function NavbarLink() {
-    const LinksData = [
-        { href: "/", label: "หน้าหลัก" },
-        { href: "/#manual", label: "วิธีการใช้งาน" },
-        { href: "/#faqs", label: "คำถามที่พบบ่อย" },
-        { href: "/records/1", label: "เพิ่มข้อมูล", matchPrefix: "/records", user: true },
-        { href: "/suggest", label: "คำแนะนำ", user: true }
-    ]
+    const LinksData = navbarLinks;
     
     const pathname = decodeURIComponent(usePathname());
     const { data: session } = useSession();

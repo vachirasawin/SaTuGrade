@@ -9,10 +9,12 @@ async function CardList({ title, cardsData }) {
                 <p className = "container mx-auto flex justify-center items-center text-3xl max-lg:text-2xl font-bold">
                     {title}
                 </p>
-                <div className = "container mx-auto w-full max-w-full flex gap-6 overflow-x-auto styleScrollbar pb-4 px-2 items-stretch">
-                    {cardsData.map((data, index) => (
-                        <Card key = {index} datas = {data}/>
-                    ))}
+                <div className = "container mx-auto w-full max-w-full overflow-x-auto styleScrollbar pb-4 px-2">
+                    <div className = "flex gap-6 items-stretch w-max min-w-full justify-center m-auto">
+                        {cardsData.map((data, index) => (
+                            <Card key = {index} datas = {data}/>
+                        ))}
+                    </div>
                 </div>
             </div>
         )

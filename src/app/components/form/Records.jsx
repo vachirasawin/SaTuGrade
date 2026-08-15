@@ -53,10 +53,10 @@ function Records({ id }) {
             if (!userId) return;
 
             try {
-                const res = await fetch(`/api/record/createRecord?userId=${encodeURIComponent(userId)}`);
-                const data = await res.json();
+                const response = await fetch(`/api/record/createRecord?userId=${encodeURIComponent(userId)}`);
+                const data = await response.json();
 
-                if (res.ok && data.recordData && Object.keys(data.recordData).length > 0) {
+                if (response.ok && data.recordData && Object.keys(data.recordData).length > 0) {
                     setRecordData(data.recordData);
                     localStorage.setItem("record_data", JSON.stringify(data.recordData));
                 } else {
