@@ -48,15 +48,34 @@ function Records({ id }) {
     const [recordData, setRecordData] = useState({});
 
     useEffect(() => {
-        const savedData = localStorage.getItem("record_data");
-        if (savedData) {
+        const fetchSavedRecord = async () => {
+            const userId = session?.user?.id || session?.user?.email;
+            if (!userId) return;
+
             try {
-                setRecordData(JSON.parse(savedData));
+                const res = await fetch(`/api/record/createRecord?userId=${encodeURIComponent(userId)}`);
+                const data = await res.json();
+
+                if (res.ok && data.recordData && Object.keys(data.recordData).length > 0) {
+                    setRecordData(data.recordData);
+                    localStorage.setItem("record_data", JSON.stringify(data.recordData));
+                } else {
+                    const savedLocal = localStorage.getItem("record_data");
+                    if (savedLocal) {
+                        setRecordData(JSON.parse(savedLocal));
+                    }
+                }
             } catch (error) {
-                console.error("Error loading saved records:", error);
+                console.error("Error fetching record data:", error);
+                const savedLocal = localStorage.getItem("record_data");
+                if (savedLocal) {
+                    setRecordData(JSON.parse(savedLocal));
+                }
             }
-        }
-    }, []);
+        };
+
+        fetchSavedRecord();
+    }, [session]);
 
     const handleInputChange = (program, term, type, value) => {
         const key = `${program}_${term}_${type}`;
@@ -115,13 +134,28 @@ function Records({ id }) {
         }
 
         const payload = formatDataForModel();
-        console.log("Payload to send:", payload);
         
         try {
-            setIsSuccess(true);
-            setSuccessTitle("บันทึกข้อมูลสำเร็จ");
-            setSuccessDetail("ส่งข้อมูลเกรดและหน่วยกิตเข้าสู่ระบบเรียบร้อยแล้ว");
-            setSuccessButton("ตกลง");
+            const response = await fetch("/api/record/createRecord", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId: session?.user?.id || session?.user?.email, 
+                    program: modelType, 
+                    payload: payload,
+                }),
+            });
+
+            if (response.ok) {
+                setIsSuccess(true);
+                setSuccessTitle("บันทึกข้อมูลสำเร็จ");
+                setSuccessDetail("ส่งข้อมูลเกรดและหน่วยกิตเข้าสู่ระบบเรียบร้อยแล้ว");
+                setSuccessButton("ตกลง");
+            } else {
+                throw new Error("Failed to save data");
+            }
         } catch (error) {
             setIsError(true);
             setErrorTitle("เกิดข้อผิดพลาด");

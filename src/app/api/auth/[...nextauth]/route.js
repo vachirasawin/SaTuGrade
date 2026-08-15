@@ -43,6 +43,7 @@ const authOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
+                token.id = user.id;
                 token.firstname = user.firstname;
                 token.lastname = user.lastname;
                 token.username = user.username;
@@ -54,6 +55,7 @@ const authOptions = {
         },
         async session({ session, token }) {
             if (session?.user) {
+                session.user.id = token.id;
                 session.user.firstname = token.firstname;
                 session.user.lastname = token.lastname;
                 session.user.username = token.username;
