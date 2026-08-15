@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 35rem;
+  --breakpoint-xxs: 30rem;
+}
+
+body {
+  background: var(--color-neutral-50);
+  color: var(--color-neutral-900);
+  font-family: "Noto Sans Thai", Helvetica, sans-serif;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.styleScrollbar {
+  margin-bottom: 8px;
+}
+.styleScrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.styleScrollbar::-webkit-scrollbar-thumb {
+  background-color: #0000001f;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #00000033;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #00000059;
+}
