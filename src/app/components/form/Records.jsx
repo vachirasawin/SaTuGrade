@@ -12,8 +12,8 @@ import SuccessAlert from "../alert/SuccessAlert"
 import WarningAlert from "../alert/WarningAlert"
 import ErrorAlert from "../alert/ErrorAlert"
 
-import { Terms } from "../../utils/TermsData"
-import { Subjects } from "../../utils/SubjectsData"
+import { terms } from "../../utils/termsData"
+import { subjects } from "../../utils/subjectsData"
 
 function Records({ id }) {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -36,13 +36,13 @@ function Records({ id }) {
     if (!session) redirect("/");
 
     const currentId = Number(id);
-    const currentTerm = Terms[currentId];
+    const currentTerm = terms[currentId];
     const prevId = currentId - 1;
     const nextId = currentId + 1;
-    const maxTerm = Object.keys(Terms).length;
+    const maxTerm = Object.keys(terms).length;
 
     const modelType = session.user.program;
-    const currentSubjects = Subjects[modelType];
+    const currentSubjects = subjects[modelType];
     const totalSubjects = currentSubjects.length;
 
     const [recordData, setRecordData] = useState({});

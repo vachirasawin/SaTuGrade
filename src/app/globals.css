@@ -5,6 +5,11 @@
   --breakpoint-xxs: 30rem;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
 body {
   background: var(--color-neutral-50);
   color: var(--color-neutral-900);

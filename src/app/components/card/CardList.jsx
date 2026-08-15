@@ -1,0 +1,22 @@
+import React from "react"
+
+import Card from "./Card"
+
+async function CardList({ title, cardsData }) {
+    return (
+        cardsData.length > 0 && (
+            <div className = "w-full h-max bg-neutral-50 px-4 py-18 max-lg:py-6 border-b border-gray-200 flex flex-col gap-12 max-lg:gap-4">
+                <p className = "container mx-auto flex justify-center items-center text-3xl max-lg:text-2xl font-bold">
+                    {title}
+                </p>
+                <div className = "container mx-auto w-full max-w-full flex gap-6 overflow-x-auto styleScrollbar pb-4 px-2 items-stretch">
+                    {cardsData.map((data, index) => (
+                        <Card key = {index} datas = {data}/>
+                    ))}
+                </div>
+            </div>
+        )
+    )
+}
+
+export default CardList

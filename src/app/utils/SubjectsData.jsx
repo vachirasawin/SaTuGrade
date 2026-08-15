@@ -1,4 +1,4 @@
-export const Subjects = {
+export const subjects = {
     SM: [
         { program: "BM", symbol: "fa-solid fa-calculator", title: "วิชาคณิตศาสตร์พื้นฐาน", placeholder: ["กรอกหน่วยกิต", "กรอกเกรด"] },
         { program: "AM", symbol: "fa-solid fa-calculator", title: "วิชาคณิตศาสตร์เพิ่มเติม", placeholder: ["กรอกหน่วยกิต", "กรอกเกรด"] },
