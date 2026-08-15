@@ -17,11 +17,14 @@ function NavbaeLink() {
 
     return (
         <div className = "flex flex-row max-md:flex-col gap-16 max-md:gap-6 text-sm font-medium">
-            {LinksData.map((link, index) => (
-                <Link key = {index} href = {link.href} className = {`${pathname === link.href ? "text-neutral-900" : "text-gray-400"}`}>
-                    {link.label}
-                </Link>
-            ))}
+            {LinksData.map((link, index) => {
+                const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+
+                return (
+                    <Link key = {index} href = {link.href} className = {`${isActive ? "text-neutral-900" : "text-gray-400"}`}>
+                        {link.label}
+                    </Link>
+            )})}
         </div>
     )
 }

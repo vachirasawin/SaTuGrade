@@ -3,11 +3,11 @@
 import React, { useState } from "react"
 import Link from "next/link"
 
-import TextInput from "./TextInput"
-import EmailInput from "./EmailInput"
-import SelectInput from "./SelectInput"
-import PasswordInput from "./PasswordInput"
-import ButtonInput from "./ButtonInput"
+import TextInput from "./input/TextInput"
+import EmailInput from "./input/EmailInput"
+import SelectInput from "./input/SelectInput"
+import PasswordInput from "./input/PasswordInput"
+import ButtonInput from "./input/ButtonInput"
 
 import SuccessAlert from "../alert/SuccessAlert"
 import WarningAlert from "../alert/WarningAlert"

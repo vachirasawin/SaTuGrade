@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 
-import ButtonInput from "../form/ButtonInput"
+import ButtonInput from "../form/input/ButtonInput"
 
 function ErrorAlert() {
     const [isOpen, setIsOpen] = useState(false);
