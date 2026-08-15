@@ -2,6 +2,8 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 import TextInput from "./input/TextInput"
 import EmailInput from "./input/EmailInput"
@@ -28,9 +30,13 @@ function SignUp() {
     const [errorTitle, setErrorTitle] = useState("");
     const [errorDetail, setErrorDetail] = useState("");
     const [errorButton, setErrorButton] = useState("");
+    
+    const { data: session } = useSession();
+    
+    if (session) redirect("/");
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [program, setProgram] = useState("");
@@ -43,9 +49,9 @@ function SignUp() {
         { value: "AC", label: "ศิลป์-คำนวณ" }
     ]
 
-    const handleReset = () => {
-        setFirstName("");
-        setLastName("");
+    const clearFormState = () => {
+        setFirstname("");
+        setLastname("");
         setUsername("");
         setEmail("");
         setProgram("");
@@ -53,10 +59,15 @@ function SignUp() {
         setConfirmPassword("");
     };
 
-    const handleSubmit = (e) => {
+    const handleReset = (e) => {
+        if (e) e.preventDefault();
+        clearFormState();
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!firstName || !lastName || !username || !email || !program || !password || !confirmPassword) {
+        if (!firstname || !lastname || !username || !email || !program || !password || !confirmPassword) {
             setIsWarning(true);
             setWarningTitle("กรอกข้อมูลไม่ครบถ้วน");
             setWarningDetail("กรุณากรอกข้อมูลในช่องที่มีเครื่องหมายสำคัญให้ครบถ้วนก่อนยืนยัน");
@@ -71,23 +82,70 @@ function SignUp() {
             setWarningButton("ตกลงเพื่อแก้ไข");
             return;
         }
+
+        try {
+            const responseCheckUser = await fetch("/api/auth/checkUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username
+                })
+            })
+
+            const { user } = await responseCheckUser.json();
+
+            if (user) {
+                setIsError(true);
+                setErrorTitle("ชื่อผู้ใช้งานนี้ถูกใช้งานแล้ว");
+                setErrorDetail("ชื่อผู้ใช้งานนี้มีอยู่ในระบบแล้ว กรุณาตรวจสอบและเปลี่ยนเป็นชื่อผู้ใช้งานอื่น");
+                setErrorButton("ลองใหม่อีกครั้ง");
+                return
+            }
+
+            const responseCreateUser = await fetch("/api/auth/createUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstname, lastname, username, email, program , password, access: "user"
+                })
+            });
+
+            if (responseCreateUser.ok) {
+                setIsSuccess(true);
+                setSuccessTitle("สมัครสมาชิกสำเร็จ");
+                setSuccessDetail("คุณได้ทำการสมัครสมาชิกเรียบร้อยแล้ว สามารถเข้าสู่ระบบเพื่อใช้งานได้ทันที");
+                setSuccessButton("ตกลง");
+                clearFormState();
+            } else {
+                throw new Error("Failed to create user");
+            }
+        } catch(error) {
+            setIsError(true);
+            setErrorTitle("เกิดข้อผิดพลาด");
+            setErrorDetail("เกิดข้อผิดพลาดขณะสมัครสมาชิก กรุณาลองใหม่อีกครั้ง");
+            setErrorButton("ลองใหม่อีกครั้ง");
+        }
     }
 
     return (
         <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex justify-center items-center max-lg:items-start max-lg:py-4 px-4 overflow-y-auto styleScrollbar">
             <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4">
                 <div className = "flex gap-4 max-lg:flex-col">
-                    <TextInput title = "ชื่อจริง" placeholder = "กรอกชื่อจริงของผู้ใช้งาน" onChange = {(e) => setFirstname(e.target.value)} request/>
-                    <TextInput title = "นามสกุล" placeholder = "กรอกนามสกุลของผู้ใช้งาน" onChange = {(e) => setLastname(e.target.value)} request/>
+                    <TextInput title = "ชื่อจริง" placeholder = "กรอกชื่อจริงของผู้ใช้งาน" value = {firstname} onChange = {(e) => setFirstname(e.target.value)} request/>
+                    <TextInput title = "นามสกุล" placeholder = "กรอกนามสกุลของผู้ใช้งาน" value = {lastname} onChange = {(e) => setLastname(e.target.value)} request/>
                 </div>
                 <div className = "flex gap-4 max-lg:flex-col">
-                    <TextInput symbol = "fa-regular fa-user" title = "ชื่อผู้ใช้งาน" placeholder = "กรอกชื่อผู้ใช้งาน" onChange = {(e) => setUsername(e.target.value)} request/>
-                    <EmailInput title = "ที่อยู่อีเมล" placeholder = "กรอกที่อยู่อีเมลของผู้ใช้งาน" onChange = {(e) => setEmail(e.target.value)} request/>
+                    <TextInput symbol = "fa-regular fa-user" title = "ชื่อผู้ใช้งาน" placeholder = "กรอกชื่อผู้ใช้งาน" value = {username} onChange = {(e) => setUsername(e.target.value)} request/>
+                    <EmailInput title = "ที่อยู่อีเมล" placeholder = "กรอกที่อยู่อีเมลของผู้ใช้งาน" value = {email} onChange = {(e) => setEmail(e.target.value)} request/>
                 </div>
                 <SelectInput title = "สายการเรียน" data = {options} value = {program} onChange = {(value) => setProgram(value)} request/>
                 <div className = "flex gap-4 max-lg:flex-col">
-                    <PasswordInput title = "รหัสผ่าน" placeholder = "กรอกรหัสผ่านของผู้ใช้งาน" onChange = {(e) => setPassword(e.target.value)} request/>
-                    <PasswordInput title = "ยืนยันรหัสผ่าน" placeholder = "กรอกรหัสผ่านอีกครั้งเพื่อยืนยันรหัสผ่าน" onChange = {(e) => setConfirmPassword(e.target.value)} request/>
+                    <PasswordInput title = "รหัสผ่าน" placeholder = "กรอกรหัสผ่านของผู้ใช้งาน" value = {password} onChange = {(e) => setPassword(e.target.value)} request/>
+                    <PasswordInput title = "ยืนยันรหัสผ่าน" placeholder = "กรอกรหัสผ่านอีกครั้งเพื่อยืนยันรหัสผ่าน" value = {confirmPassword} onChange = {(e) => setConfirmPassword(e.target.value)} request/>
                 </div>
                 <div className = "w-full flex justify-center items-center gap-2 text-sm font-medium">
                     <p>หากมีบัญชีผู้ใช้แล้ว</p>

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react"
 
-function PasswordInput({ title, placeholder, onChange, request }) {
+function PasswordInput({ title, placeholder, value, onChange, request }) {
     const [isFocus, setIsFocus] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -21,7 +21,7 @@ function PasswordInput({ title, placeholder, onChange, request }) {
                 <div onMouseDown = {handleTogglePassword} className = {`w-12 h-12 shrink-0 flex justify-center items-center border ${isFocus ? "border-blue-500 text-blue-500" : "border-gray-200"} rounded-l-sm border-r-0 transition-all duration-200`}>
                     <i className = {showPassword ? "fa-solid fa-lock-open" : "fa-solid fa-lock"}></i>
                 </div>
-                <input type = {showPassword ? "text" : "password"} onChange = {onChange} onFocus={() => setIsFocus(true)} onBlur={() => setIsFocus(false)} className = {`w-full h-12 py-[13px] border ${isFocus ? "border-blue-500" : "border-gray-200"} outline-none text-sm font-medium px-4 transition-colors duration-200`} placeholder = {placeholder}/>
+                <input type = {showPassword ? "text" : "password"} value = {value} onChange = {onChange} onFocus={() => setIsFocus(true)} onBlur={() => setIsFocus(false)} className = {`w-full h-12 py-[13px] border ${isFocus ? "border-blue-500" : "border-gray-200"} outline-none text-sm font-medium px-4 transition-colors duration-200`} placeholder = {placeholder}/>
             </div>
         </div>
     )

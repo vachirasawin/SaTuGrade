@@ -1,14 +1,19 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
+import { redirect } from "next/navigation"
+import { useSession } from "next-auth/react"
 
-import TextInput from "./input/TextInput"
+import RecordInput from "./input/RecordInput"
 import ButtonInput from "./input/ButtonInput"
 
 import SuccessAlert from "../alert/SuccessAlert"
 import WarningAlert from "../alert/WarningAlert"
 import ErrorAlert from "../alert/ErrorAlert"
+
+import { Terms } from "../../utils/TermsData"
+import { Subjects } from "../../utils/SubjectsData"
 
 function Records({ id }) {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -25,51 +30,109 @@ function Records({ id }) {
     const [errorTitle, setErrorTitle] = useState("");
     const [errorDetail, setErrorDetail] = useState("");
     const [errorButton, setErrorButton] = useState("");
-
-    const terms = {
-        "1": "มัธยมศึกษาปีที่ 4 เทอมที่ 1",
-        "2": "มัธยมศึกษาปีที่ 4 เทอมที่ 2",
-        "3": "มัธยมศึกษาปีที่ 5 เทอมที่ 1",
-        "4": "มัธยมศึกษาปีที่ 5 เทอมที่ 2",
-        "5": "มัธยมศึกษาปีที่ 6 เทอมที่ 1"
-    };
-
-    const subjects = {
-        SM: [
-            { symbol: "fa-solid fa-calculator", title: "วิชาคณิตศาสตร์พื้นฐาน", placeholder: "กรอกเกรดวิชาคณิตศาสตร์พื้นฐาน" },
-            { symbol: "fa-solid fa-calculator", title: "วิชาคณิตศาสตร์เพิ่มเติม", placeholder: "กรอกเกรดวิชาคณิตศาสตร์เพิ่มเติม" },
-            { symbol: "fa-solid fa-atom", title: "วิชาฟิสิกส์", placeholder: "กรอกเกรดวิชาฟิสิกส์" },
-            { symbol: "fa-solid fa-flask", title: "วิชาเคมี", placeholder: "กรอกเกรดวิชาเคมี" },
-            { symbol: "fa-solid fa-microscope", title: "วิชาชีวะ", placeholder: "กรอกเกรดวิชาชีวะ" },
-        ],
-        AL: [
-            { symbol: "fa-solid fa-calculator", title: "วิชาคณิตศาสตร์พื้นฐาน", placeholder: "กรอกเกรดวิชาคณิตศาสตร์พื้นฐาน" },
-            { symbol: "fa-solid fa-language", title: "วิชาภาษาไทย", placeholder: "กรอกเกรดวิชาภาษาไทย" },
-            { symbol: "fa-solid fa-language", title: "วิชาภาษาอังกฤษ", placeholder: "กรอกเกรดวิชาภาษาอังกฤษ" },
-            { symbol: "fa-solid fa-language", title: "วิชาภาษาอังกฤษเพิ่มเติม", placeholder: "กรอกเกรดวิชาภาษาอังกฤษเพิ่มเติม" },
-            { symbol: "fa-solid fa-language", title: "วิชาภาษาเอก", placeholder: "กรอกเกรดวิชาภาษาเอก" },
-            { symbol: "fa-solid fa-people-group", title: "วิชาสังคม", placeholder: "กรอกเกรดวิชาสังคม" },
-        ],
-        AC: [
-            { symbol: "fa-solid fa-calculator", title: "วิชาคณิตศาสตร์พื้นฐาน", placeholder: "กรอกเกรดวิชาคณิตศาสตร์พื้นฐาน" },
-            { symbol: "fa-solid fa-calculator", title: "วิชาคณิตศาสตร์เพิ่มเติม", placeholder: "กรอกเกรดวิชาคณิตศาสตร์เพิ่มเติม" },
-            { symbol: "fa-solid fa-language", title: "วิชาภาษาไทย", placeholder: "กรอกเกรดวิชาภาษาไทย" },
-            { symbol: "fa-solid fa-language", title: "วิชาภาษาอังกฤษ", placeholder: "กรอกเกรดวิชาภาษาอังกฤษ" },
-            { symbol: "fa-solid fa-people-group", title: "วิชาสังคม", placeholder: "กรอกเกรดวิชาสังคม" },
-        ]
-    };
+        
+    const { data: session } = useSession();
+    
+    if (!session) redirect("/");
 
     const currentId = Number(id);
-    const currentTerm = terms[currentId];
+    const currentTerm = Terms[currentId];
     const prevId = currentId - 1;
     const nextId = currentId + 1;
-    const maxTerm = Object.keys(terms).length;
-    const currentSubjects = subjects["SM"];
+    const maxTerm = Object.keys(Terms).length;
+
+    const modelType = session.user.program;
+    const currentSubjects = Subjects[modelType];
     const totalSubjects = currentSubjects.length;
+
+    const [recordData, setRecordData] = useState({});
+
+    useEffect(() => {
+        const savedData = localStorage.getItem("record_data");
+        if (savedData) {
+            try {
+                setRecordData(JSON.parse(savedData));
+            } catch (error) {
+                console.error("Error loading saved records:", error);
+            }
+        }
+    }, []);
+
+    const handleInputChange = (program, term, type, value) => {
+        const key = `${program}_${term}_${type}`;
+        setRecordData(prev => {
+            const updated = {
+                ...prev,
+                [key]: value === "" ? "" : Number(value)
+            };
+            localStorage.setItem("record_data", JSON.stringify(updated));
+            return updated;
+        });
+    };
+
+    const formatDataForModel = () => {
+        const payload = {};
+        for (let t = 1; t <= maxTerm; t++) {
+            currentSubjects.forEach(subject => {
+                const creditKey = `${subject.program}_${t}_Credit`;
+                const gradeKey = `${subject.program}_${t}_Grade`;
+
+                payload[creditKey] = recordData[creditKey] ?? 0;
+                payload[gradeKey] = recordData[gradeKey] ?? 0;
+            });
+        }
+        return payload;
+    };
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        setRecordData({});
+        localStorage.removeItem("record_data");
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const isCurrentTermIncomplete = currentSubjects.some(subject => {
+            const creditKey = `${subject.program}_${currentId}_Credit`;
+            const gradeKey = `${subject.program}_${currentId}_Grade`;
+
+            const creditVal = recordData[creditKey];
+            const gradeVal = recordData[gradeKey];
+
+            const isCreditEmpty = creditVal === undefined || creditVal === null || creditVal === "";
+            const isGradeEmpty = gradeVal === undefined || gradeVal === null || gradeVal === "";
+
+            return isCreditEmpty || isGradeEmpty;
+        });
+
+        if (isCurrentTermIncomplete) {
+            setIsWarning(true);
+            setWarningTitle("กรอกข้อมูลไม่ครบถ้วน");
+            setWarningDetail("กรุณากรอกข้อมูลในช่องที่มีเครื่องหมายสำคัญให้ครบถ้วนก่อนยืนยัน");
+            setWarningButton("ตกลงเพื่อแก้ไข");
+            return;
+        }
+
+        const payload = formatDataForModel();
+        console.log("Payload to send:", payload);
+        
+        try {
+            setIsSuccess(true);
+            setSuccessTitle("บันทึกข้อมูลสำเร็จ");
+            setSuccessDetail("ส่งข้อมูลเกรดและหน่วยกิตเข้าสู่ระบบเรียบร้อยแล้ว");
+            setSuccessButton("ตกลง");
+        } catch (error) {
+            setIsError(true);
+            setErrorTitle("เกิดข้อผิดพลาด");
+            setErrorDetail("ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง");
+            setErrorButton("ตกลง");
+        }
+    };
 
     return (
         <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex justify-center items-center max-lg:items-start py-4 px-4 overflow-y-auto styleScrollbar">
-            <form className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4">
+            <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4">
                 <div className = "flex flex-col gap-4 justify-center items-center">
                     <p className = "text-xl font-bold">{currentTerm}</p>
                     <div className = "flex flex-row w-full gap-4">
@@ -81,17 +144,14 @@ function Records({ id }) {
                         }
                     </div>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    {currentSubjects.map((subject, index) => {
-                        const isLastAndOdd = totalSubjects % 2 !== 0 && index === totalSubjects - 1;
+                {currentSubjects.map((subject, index) => {
+                        const creditKey = `${subject.program}_${currentId}_Credit`;
+                        const gradeKey = `${subject.program}_${currentId}_Grade`;
 
                         return (
-                            <div key = {index} className = {isLastAndOdd ? "lg:col-span-2 lg:w-1/2 lg:justify-self-center w-full" : "w-full"}>
-                                <TextInput symbol = {subject.symbol} title = {subject.title} placeholder = {subject.placeholder} onChange={(e) => setSubjectGrade(e.target.value)} request/>
-                            </div>
+                            <RecordInput key = {index} symbol = {subject.symbol} title = {subject.title} placeholder = {subject.placeholder}creditValue = {recordData[creditKey]}gradeValue = {recordData[gradeKey]}onCreditChange={(e) => handleInputChange(subject.program, currentId, "Credit", e.target.value)}onGradeChange={(e) => handleInputChange(subject.program, currentId, "Grade", e.target.value)}request/>
                         );
                     })}
-                </div>
                 <div className = "flex gap-4 max-lg:flex-col">
                     <ButtonInput title = "บันทึกข้อมูล" type = "submit" width = "w-full" color = "text-blue-500 hover:bg-blue-500"/>
                     <ButtonInput title = "ยกเลิกการบันทึกข้อมูล" type = "reset" width = "w-full" color = "text-red-500 hover:bg-red-500"/>

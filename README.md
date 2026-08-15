@@ -37,7 +37,7 @@
 #### **Arts-Language Program : AL**
 - คณิตศาสตร์พื้นฐาน (Basic Mathematics: BM)
 - ภาษาไทย (Thai Language: TL)
-- ภาษาอังกฤษ (English Language : EL)
+- ภาษาอังกฤษพื้นฐาน (English Language : BEL)
 - ภาษาอังกฤษเพิ่มเติม (Additional English Language: AEL)
 - ภาษาเอก (Major Foreign Language : MFL)
 - สังคม (Social : S)
@@ -45,7 +45,7 @@
 - คณิตศาสตร์พื้นฐาน (Basic Mathematics: BM)
 - คณิตศาสตร์เพิ่มเติม (Additional Mathematics : AM)
 - ภาษาไทย (Thai Language: TL)
-- ภาษาอังกฤษ (English Language : EL)
+- ภาษาอังกฤษพื้นฐาน (English Language : BEL)
 - สังคม (Social : S)
 ### **Sample Populations**
 - นักเรียนที่จบการศึกษาจากระดับชั้นมัธยมศึกษาปีที่ 6 จำนวน XXX คน ในแต่ละ Program
