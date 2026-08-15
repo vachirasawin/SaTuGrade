@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react"
 import { redirect } from "next/navigation"
 import { useSession } from "next-auth/react"
 
-import { terms } from "../utils/TermsData";
-import { subjects } from "../utils/SubjectsData";
+import { terms } from "../utils/termsData";
+import { subjects } from "../utils/subjectsData";
 import { programs } from "../utils/programsData";
 
 import LoadingAleft from "./alert/LoadingAleft";
