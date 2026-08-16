@@ -23,11 +23,31 @@ export const manuals = [
     {
         symbol: "fa-regular fa-file-lines",
         title: "ตรวจสอบผลการพยากรณ์",
-        detail: "ตรวจสอบผลการพยากรณ์ผลการเรียนในเทอมถัดไป และคำแนะนำวิชาที่ควรให้ความสำคัญ",
+        detail: "ตรวจสอบผลการพยากรณ์ผลการเรียนในเทอมถัดไป",
         width: "w-[442px]",
         height: "h-[286px]",
         url: [
-            ["ผลการพยากรณ์", "/prediction"]
+            ["ผลการพยากรณ์", "/prediction#predicted"]
+        ]
+    },
+    {
+        symbol: "fa-solid fa-triangle-exclamation",
+        title: "ตรวจสอบวิชาที่ควรระวัง",
+        detail: "ตรวจสอบผลการพยากรณ์วิชาที่ควรระวังในเทอมถัดไป",
+        width: "w-[442px]",
+        height: "h-[286px]",
+        url: [
+            ["วิชาที่ควรระวัง", "/prediction#caution"]
+        ]
+    },
+    {
+        symbol: "fa-regular fa-circle-xmark",
+        title: "ตรวจสอบวิชาที่ต้องตั้งใจเป็นพิเศษ",
+        detail: "ตรวจสอบผลการพยากรณ์วิชาที่ต้องตั้งใจเป็นพิเศษในเทอมถัดไป",
+        width: "w-[442px]",
+        height: "h-[286px]",
+        url: [
+            ["วิชาที่ต้องตั้งใจเป็นพิเศษ", "/prediction#suggestion"]
         ]
     }
 ]
