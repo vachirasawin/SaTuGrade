@@ -142,7 +142,6 @@ function Prediction() {
             setLoadingSpinnerTitle("กำลังโหลดข้อมูล");
             setPredictionError(null);
 
-            // --- MOCK MODE: ข้ามการเรียก API จริง ใช้ข้อมูลจำลองแทน ---
             if (MOCK_PREDICTION) {
                 const mockRecord = buildMockRecordData(currentSubjects);
                 await withMinLoadingTime(async () => mockRecord);
@@ -155,7 +154,6 @@ function Prediction() {
                 setIsLoadingSpinner(false);
                 return;
             }
-            // --- END MOCK MODE ---
 
             const userId = session?.user?.id || session?.user?.email;
             if (!userId) {

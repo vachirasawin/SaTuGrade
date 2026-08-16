@@ -1,8 +1,8 @@
 import React from "react"
 
-import CardList from "./card/CardList"
+import CardList from "../card/CardList"
 
-import { manuals } from "../utils/manualsData"
+import { manuals } from "../../utils/manualsData"
 
 function ManualsSection() {
     const manualsData = manuals;

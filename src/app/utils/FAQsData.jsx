@@ -4,9 +4,9 @@ export const FAQs = [
         title: "ฉันจะดูผลการพยากรณ์ได้อย่างไร",
         detail: "คุณสามารถทำตามวิธีการใช้งานเพื่อดูผลการพยากรณ์ผลการเรียนเทอมถัดไปได้",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["วิธีการใช้งาน", "/#manual"]
+            [ "วิธีการใช้งาน", "/#manual" ]
         ]
     },
     {
@@ -14,9 +14,9 @@ export const FAQs = [
         title: "Lorem ipsum",
         detail: "Lorem ipsum",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["Lorem ipsum", "/"]
+            [ "Lorem ipsum", "/" ]
         ]
     },
     {
@@ -24,9 +24,9 @@ export const FAQs = [
         title: "Lorem ipsum",
         detail: "Lorem ipsum",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["Lorem ipsum", "/"]
+            [ "Lorem ipsum", "/" ]
         ]
     },
     {
@@ -34,9 +34,9 @@ export const FAQs = [
         title: "Lorem ipsum",
         detail: "Lorem ipsum",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["Lorem ipsum", "/"]
+            [ "Lorem ipsum", "/" ]
         ]
     },
     {
@@ -44,9 +44,9 @@ export const FAQs = [
         title: "Lorem ipsum",
         detail: "Lorem ipsum",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["Lorem ipsum", "/"]
+            [ "Lorem ipsum", "/" ]
         ]
     }
 ]

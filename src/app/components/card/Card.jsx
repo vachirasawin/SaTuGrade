@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 function Card({ datas }) {
     return (
@@ -8,6 +9,11 @@ function Card({ datas }) {
                 {datas.symbol &&
                     <div className = "rounded-sm shadow-sm w-16 h-16 max-lg:w-12 max-lg:h-12 flex justify-center items-center bg-white border border-gray-200 text-xl max-lg:text-lg">
                         <i className = {datas.symbol}></i>
+                    </div>
+                }
+                {datas.image &&
+                    <div className = "relative rounded-sm shadow-sm w-16 h-16 max-lg:w-12 max-lg:h-12 flex justify-center items-center bg-white border border-gray-200 max-lg:text-lg">
+                        <Image src = {datas.image} alt = {datas.title} fill className = "object-contain max-w-6 max-h-6 mx-auto my-auto"/>
                     </div>
                 }
                 <p className = "text-xl max-lg:text-lg font-bold">{datas.title}</p>

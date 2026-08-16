@@ -4,10 +4,10 @@ export const manuals = [
         title: "เข้าสู่ระบบ",
         detail: "เข้าสู่ระบบเพื่อบันทึกข้อมูลผลการเรียน หากไม่มีบัญชีสามารถสมัครสมาชิกเพื่อสร้างบัญชีได้",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["เข้าสู่ระบบ", "/sign in"],
-            ["สมัครสมาชิก", "/sign up"]
+            [ "เข้าสู่ระบบ", "/sign in" ],
+            [ "สมัครสมาชิก", "/sign up" ]
         ]
     },
     {
@@ -15,9 +15,9 @@ export const manuals = [
         title: "เพิ่มข้อมูลผลการเรียน",
         detail: "เพิ่มข้อมูลผลการเรียนทั้งหมดเพื่อเป็นข้อมูลในการพยากรณ์ผลกรเรียนในเทอมถัดไป",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["เพิ่มข้อมูล", "/records/1"]
+            [ "เพิ่มข้อมูล", "/records/1" ]
         ]
     },
     {
@@ -25,9 +25,9 @@ export const manuals = [
         title: "ตรวจสอบผลการพยากรณ์",
         detail: "ตรวจสอบผลการพยากรณ์ผลการเรียนในเทอมถัดไป",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["ผลการพยากรณ์", "/prediction#predicted"]
+            [ "ผลการพยากรณ์", "/prediction#predicted" ]
         ]
     },
     {
@@ -35,9 +35,9 @@ export const manuals = [
         title: "ตรวจสอบวิชาที่ควรระวัง",
         detail: "ตรวจสอบผลการพยากรณ์วิชาที่ควรระวังในเทอมถัดไป",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["วิชาที่ควรระวัง", "/prediction#caution"]
+            [ "วิชาที่ควรระวัง", "/prediction#caution" ]
         ]
     },
     {
@@ -45,9 +45,9 @@ export const manuals = [
         title: "ตรวจสอบวิชาที่ต้องตั้งใจเป็นพิเศษ",
         detail: "ตรวจสอบผลการพยากรณ์วิชาที่ต้องตั้งใจเป็นพิเศษในเทอมถัดไป",
         width: "w-[442px]",
-        height: "h-[286px]",
+        height: "h-[296px]",
         url: [
-            ["วิชาที่ต้องตั้งใจเป็นพิเศษ", "/prediction#suggestion"]
+            [ "วิชาที่ต้องตั้งใจเป็นพิเศษ", "/prediction#suggestion" ]
         ]
     }
 ]
