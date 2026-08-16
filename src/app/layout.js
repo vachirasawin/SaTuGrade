@@ -1,5 +1,6 @@
 import "./globals.css";
 import { AuthProvider } from "./Providers";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   title: "SaTuGrade",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className = "antialiased">
         <AuthProvider>{children}</AuthProvider>
+        <Analytics/>
       </body>
     </html>
   );
