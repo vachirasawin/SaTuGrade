@@ -18,7 +18,7 @@ const CAUTION_DROP_THRESHOLD = 0.5;
 
 const MOCK_PREDICTION = false;
 const MOCK_RECORDED_GRADE = 3.0;
-const MOCK_PREDICTED_GRADE = 2.0;
+const MOCK_PREDICTED_GRADE = 2.5;
 
 const buildMockRecordData = (currentSubjects) => {
     const mockRecord = {};
@@ -80,7 +80,7 @@ function Prediction() {
                 const creditVal = data[creditKey];
                 const gradeVal = data[gradeKey];
 
-                const hasCredit = creditVal !== undefined && creditVal !== null && creditVal !== "";
+                const hasCredit = creditVal !== undefined && creditVal !== null && creditVal !== "" && Number(creditVal) > 0;
                 const hasGrade = gradeVal !== undefined && gradeVal !== null && gradeVal !== "";
 
                 return hasCredit && hasGrade;
@@ -112,7 +112,7 @@ function Prediction() {
         return currentSubjects.reduce((result, subject) => {
             const predictedGrade = predictions[subject.program];
 
-            if (predictedGrade !== undefined && predictedGrade < SUGGESTION_THRESHOLD) {
+            if (predictedGrade !== undefined && predictedGrade <= SUGGESTION_THRESHOLD) {
                 result.push({ subject, predictedGrade });
             }
 
@@ -128,7 +128,7 @@ function Prediction() {
             const latestGrade = getLatestGrade(subject, recordData, latestTerm);
             if (latestGrade === null) return result;
 
-            if (predictedGrade < latestGrade - CAUTION_DROP_THRESHOLD) {
+            if (predictedGrade <= latestGrade - CAUTION_DROP_THRESHOLD) {
                 result.push({ subject, predictedGrade, latestGrade });
             }
 

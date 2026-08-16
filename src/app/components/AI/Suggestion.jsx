@@ -10,7 +10,7 @@ function Suggestion({ subjects = [] }) {
             {hasSuggestion ? (
                 <>
                     <p className = "text-gray-400 text-sm font-medium">
-                        วิชาต่อไปนี้มีผลการเรียนที่คาดการณ์ต่ำกว่า 2.5 ควรให้ความสนใจเป็นพิเศษ
+                        วิชาต่อไปนี้มีผลการเรียนที่คาดการณ์ไม่เกิน 2.5 ควรให้ความสนใจเป็นพิเศษ
                     </p>
 
                     <div className = "grid grid-cols-2 max-lg:grid-cols-1 gap-4">
