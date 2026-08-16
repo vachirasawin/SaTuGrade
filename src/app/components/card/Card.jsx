@@ -21,7 +21,7 @@ function Card({ datas }) {
             <p className = "flex-1 text-base font-medium text-gray-400 max-lg:text-sm break-words overflow-y-auto styleScrollbar">{datas.detail}</p>
             <div className = "mt-auto flex justify-start items-center gap-2">
                 {datas.url && datas.url.map((data, index) => (
-                    <Link key = {index} href = {data[1]} className = "rounded-sm shadow-sm w-max h-7 flex justify-center items-center bg-white border border-gray-200 text-sm font-semibold text-blue-500 px-4 py-1 hover:border-blue-500 hover:text-white hover:bg-blue-500 transition-all duration-200">
+                    <Link key = {index} href = {data[1]} target = "_blank" rel = "noopener noreferrer" className = "rounded-sm shadow-sm w-max h-7 flex justify-center items-center bg-white border border-gray-200 text-sm font-semibold text-blue-500 px-4 py-1 hover:border-blue-500 hover:text-white hover:bg-blue-500 transition-all duration-200">
                         {data[0]}
                     </Link>
                 ))}
