@@ -157,8 +157,8 @@ function SignUp() {
     }
 
     return (
-        <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex justify-center items-center max-lg:items-start max-lg:py-4 px-4 overflow-y-auto styleScrollbar">
-            <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4">
+        <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex max-lg:py-4 px-4 overflow-y-auto styleScrollbar">
+            <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4 mx-auto my-auto">
                 <div className = "flex gap-4 max-lg:flex-col">
                     <TextInput title = "ชื่อจริง" placeholder = "กรอกชื่อจริงของผู้ใช้งาน" value = {firstname} onChange = {(e) => setFirstname(e.target.value)} request/>
                     <TextInput title = "นามสกุล" placeholder = "กรอกนามสกุลของผู้ใช้งาน" value = {lastname} onChange = {(e) => setLastname(e.target.value)} request/>

@@ -200,8 +200,8 @@ function Records({ id }) {
     };
 
     return (
-        <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex justify-center items-center max-lg:items-start py-4 px-4 overflow-y-auto styleScrollbar">
-            <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4">
+        <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex py-4 px-4 overflow-y-auto styleScrollbar">
+            <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4 mx-auto my-auto">
                 <div className = "flex flex-col gap-4 justify-center items-center">
                     <p className = "text-xl font-bold">{currentTerm}</p>
                     <div className = "flex flex-row w-full gap-4">

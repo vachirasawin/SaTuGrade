@@ -1,6 +1,6 @@
 export const backend = [
     {
-        image: "/python.webp",
+        image: "/backend/python.webp",
         title: "Python",
         detail: "ภาษาโปรแกรมมิ่งหลักที่ใช้พัฒนาระบบ AI และ Machine Learning",
         width: "w-[442px]",
@@ -10,7 +10,7 @@ export const backend = [
         ]
     },
     {
-        image: "/fastapi.png",
+        image: "/backend/fastapi.png",
         title: "FastAPI",
         detail: "Web Framework ของ Python สำหรับสร้าง API ที่มีความเร็วสูงและรองรับ Async",
         width: "w-[442px]",
@@ -20,7 +20,7 @@ export const backend = [
         ]
     },
     {
-        image: "/uvicorn.png",
+        image: "/backend/uvicorn.png",
         title: "Uvicorn",
         detail: "เซิร์ฟเวอร์สำหรับรันแอป FastAPI (ASGI Server)",
         width: "w-[442px]",
@@ -30,7 +30,7 @@ export const backend = [
         ]
     },
     {
-        image: "/scikit_learn.webp",
+        image: "/backend/scikit_learn.webp",
         title: "scikit-learn",
         detail: "ไลบรารี Machine Learning ของ Python ใช้สำหรับสร้างโมเดล (เช่น Logistic Regression)",
         width: "w-[442px]",
@@ -49,7 +49,7 @@ export const backend = [
         ]
     },
     {
-        image: "/pandas.svg",
+        image: "/backend/pandas.svg",
         title: "pandas",
         detail: "ไลบรารีสำหรับจัดการและวิเคราะห์ข้อมูลแบบตาราง (DataFrame)",
         width: "w-[442px]",
@@ -59,7 +59,7 @@ export const backend = [
         ]
     },
     {
-        image: "/numpy.svg",
+        image: "/backend/numpy.svg",
         title: "NumPy",
         detail: "ไลบรารีสำหรับคำนวณทางคณิตศาสตร์และจัดการข้อมูลเชิงตัวเลข",
         width: "w-[442px]",
@@ -69,7 +69,7 @@ export const backend = [
         ]
     },
     {
-        image: "/joblib.ico",
+        image: "/backend/joblib.ico",
         title: "joblib",
         detail: "เครื่องมือสำหรับบันทึกและโหลดโมเดล Machine Learning ที่เทรนไว้แล้ว (ไฟล์ .pkl)",
         width: "w-[442px]",

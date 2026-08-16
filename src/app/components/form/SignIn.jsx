@@ -107,8 +107,8 @@ function SignIn() {
     }
 
     return (
-        <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex justify-center items-center max-lg:items-start max-lg:py-4 px-4 overflow-y-auto styleScrollbar">
-            <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4">
+        <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-transparent z-30 flex max-lg:py-4 px-4 overflow-y-auto styleScrollbar">
+            <form onSubmit = {handleSubmit} onReset = {handleReset} className = "bg-white p-8 max-lg:p-4 max-lg:w-full rounded-xl shadow-md flex flex-col gap-4 mx-auto my-auto">
                 <TextInput symbol = "fa-regular fa-user" title = "ชื่อผู้ใช้งาน" placeholder = "กรอกชื่อผู้ใช้งาน" value = {username} onChange = {(e) => setUsername(e.target.value)} request/>
                 <PasswordInput title = "รหัสผ่าน" placeholder = "กรอกรหัสผ่านของผู้ใช้งาน" value = {password} onChange = {(e) => setPassword(e.target.value)} request/>
                 <div className = "w-full flex justify-center items-center gap-2 text-sm font-medium">
