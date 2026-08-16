@@ -14,9 +14,9 @@ function Navbar() {
                             <span className = "text-neutral-900">SaTu</span>
                             <span className = "text-blue-500">Grade</span>
                         </p>
-                        <div className = "flex max-md:hidden"><NavbarLink/></div>
-                        <div className = "hidden max-md:flex"><NavbarMenu/></div>
-                        <div className = "flex max-md:hidden"><NavbarButton/></div>
+                        <div className = "flex max-lg:hidden"><NavbarLink/></div>
+                        <div className = "hidden max-lg:flex"><NavbarMenu/></div>
+                        <div className = "flex max-lg:hidden"><NavbarButton/></div>
                     </div>
                 </div>
             </div>

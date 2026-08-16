@@ -11,9 +11,24 @@ import ButtonInput from "./input/ButtonInput"
 import SuccessAlert from "../alert/SuccessAlert"
 import WarningAlert from "../alert/WarningAlert"
 import ErrorAlert from "../alert/ErrorAlert"
+import LoadingSpinnerAlert from "../alert/LoadingSpinnerAlert"
 
 import { terms } from "../../utils/termsData"
 import { subjects } from "../../utils/subjectsData"
+
+const MIN_LOADING_TIME = 1000;
+
+const withMinLoadingTime = async (task) => {
+    const startTime = Date.now();
+    const result = await task();
+    const elapsedTime = Date.now() - startTime;
+
+    if (elapsedTime < MIN_LOADING_TIME) {
+        await new Promise((resolve) => setTimeout(resolve, MIN_LOADING_TIME - elapsedTime));
+    }
+
+    return result;
+};
 
 function Records({ id }) {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -30,6 +45,9 @@ function Records({ id }) {
     const [errorTitle, setErrorTitle] = useState("");
     const [errorDetail, setErrorDetail] = useState("");
     const [errorButton, setErrorButton] = useState("");
+        
+    const [isLoadingSpinner, setIsLoadingSpinner] = useState(true);
+    const [loadingSpinnerTitle, setLoadingSpinnerTitle] = useState("");
         
     const { data: session } = useSession();
     
@@ -52,25 +70,32 @@ function Records({ id }) {
             const userId = session?.user?.id || session?.user?.email;
             if (!userId) return;
 
-            try {
-                const response = await fetch(`/api/record/createRecord?userId=${encodeURIComponent(userId)}`);
-                const data = await response.json();
+            setIsLoadingSpinner(true);
+            setLoadingSpinnerTitle("กำลังโหลดข้อมูล");
 
-                if (response.ok && data.recordData && Object.keys(data.recordData).length > 0) {
-                    setRecordData(data.recordData);
-                    localStorage.setItem("record_data", JSON.stringify(data.recordData));
-                } else {
-                    const savedLocal = localStorage.getItem("record_data");
-                    if (savedLocal) {
-                        setRecordData(JSON.parse(savedLocal));
+            try {
+                await withMinLoadingTime(async () => {
+                    const response = await fetch(`/api/record/createRecord?userId=${encodeURIComponent(userId)}`);
+                    const data = await response.json();
+
+                    if (response.ok && data.recordData && Object.keys(data.recordData).length > 0) {
+                        setRecordData(data.recordData);
+                        localStorage.setItem("record_data", JSON.stringify(data.recordData));
+                    } else {
+                        const savedLocal = localStorage.getItem("record_data");
+                        if (savedLocal) {
+                            setRecordData(JSON.parse(savedLocal));
+                        }
                     }
-                }
+                });
             } catch (error) {
                 console.error("Error fetching record data:", error);
                 const savedLocal = localStorage.getItem("record_data");
                 if (savedLocal) {
                     setRecordData(JSON.parse(savedLocal));
                 }
+            } finally {
+                setIsLoadingSpinner(false);
             }
         };
 
@@ -134,19 +159,24 @@ function Records({ id }) {
         }
 
         const payload = formatDataForModel();
-        
+
+        setIsLoadingSpinner(true);
+        setLoadingSpinnerTitle("กำลังบันทึกข้อมูล");
+
         try {
-            const response = await fetch("/api/record/createRecord", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    userId: session?.user?.id || session?.user?.email, 
-                    program: modelType, 
-                    payload: payload,
-                }),
-            });
+            const response = await withMinLoadingTime(() =>
+                fetch("/api/record/createRecord", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        userId: session?.user?.id || session?.user?.email, 
+                        program: modelType, 
+                        payload: payload,
+                    }),
+                })
+            );
 
             if (response.ok) {
                 setIsSuccess(true);
@@ -161,6 +191,8 @@ function Records({ id }) {
             setErrorTitle("เกิดข้อผิดพลาด");
             setErrorDetail("ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง");
             setErrorButton("ตกลง");
+        } finally {
+            setIsLoadingSpinner(false);
         }
     };
 
@@ -200,6 +232,9 @@ function Records({ id }) {
             )}
             {isSuccess && (
                 <SuccessAlert title = {successTitle} detail = {successDetail} button = {successButton} onClose = {() => setIsSuccess(false)}/>
+            )}
+            {isLoadingSpinner && (
+                <LoadingSpinnerAlert title = {loadingSpinnerTitle}/>
             )}
         </div>
     )

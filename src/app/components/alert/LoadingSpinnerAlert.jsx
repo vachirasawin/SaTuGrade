@@ -1,6 +1,6 @@
 import React from "react"
 
-function LoadingAleft({ title }) {
+function LoadingSpinnerAlert({ title }) {
     return (
         <div className = "fixed top-24 left-0 w-screen h-[calc(100vh-6rem)] bg-neutral-900/80 z-40 flex justify-center items-center max-lg:items-start max-lg:py-4 px-4 overflow-y-auto styleScrollbar">
             <div className = "bg-white p-8 max-lg:p-4 rounded-xl shadow-md flex flex-col gap-4 w-sm">
@@ -16,4 +16,4 @@ function LoadingAleft({ title }) {
     )
 }
 
-export default LoadingAleft
+export default LoadingSpinnerAlert

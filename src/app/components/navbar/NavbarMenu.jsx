@@ -21,7 +21,7 @@ function NavbarMenu() {
 
     return (
         <div className = "flex justify-center items-center gap-4">
-            <button type = "button" onClick = {() => setMenu(!menu)} className = {`w-10 h-10 hidden max-md:flex justify-center items-center border border-gray-200 shadow-md rounded-md text-base relative z-30 transition-colors duration-200 ${menu ? "text-neutral-900" : "text-gray-400"}`}>
+            <button type = "button" onClick = {() => setMenu(!menu)} className = {`w-10 h-10 hidden max-lg:flex justify-center items-center border border-gray-200 shadow-md rounded-md text-base relative z-30 transition-colors duration-200 ${menu ? "text-neutral-900" : "text-gray-400"}`}>
                 <i className = "fa-solid fa-bars"></i>
             </button>
 

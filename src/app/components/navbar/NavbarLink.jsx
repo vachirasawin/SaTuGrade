@@ -14,7 +14,7 @@ function NavbarLink() {
     const { data: session } = useSession();
 
     return (
-        <div className = "flex flex-row max-md:flex-col gap-16 max-md:gap-6 text-sm font-medium">
+        <div className = "flex flex-row max-lg:flex-col gap-16 max-lg:gap-6 text-sm font-medium">
             {LinksData.map((link, index) => {
                 if (link.nonuser && session) return null;
                 if (link.user && !session) return null;

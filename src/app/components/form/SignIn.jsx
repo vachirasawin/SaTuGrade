@@ -13,6 +13,21 @@ import ButtonInput from "./input/ButtonInput"
 import SuccessAlert from "../alert/SuccessAlert"
 import WarningAlert from "../alert/WarningAlert"
 import ErrorAlert from "../alert/ErrorAlert"
+import LoadingSpinnerAlert from "../alert/LoadingSpinnerAlert"
+
+const MIN_LOADING_TIME = 1000;
+
+const withMinLoadingTime = async (task) => {
+    const startTime = Date.now();
+    const result = await task();
+    const elapsedTime = Date.now() - startTime;
+
+    if (elapsedTime < MIN_LOADING_TIME) {
+        await new Promise((resolve) => setTimeout(resolve, MIN_LOADING_TIME - elapsedTime));
+    }
+
+    return result;
+};
 
 function SignIn() {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -29,6 +44,9 @@ function SignIn() {
     const [errorTitle, setErrorTitle] = useState("");
     const [errorDetail, setErrorDetail] = useState("");
     const [errorButton, setErrorButton] = useState("");
+    
+    const [isLoadingSpinner, setIsLoadingSpinner] = useState(false);
+    const [loadingSpinnerTitle, setLoadingSpinnerTitle] = useState("");
 
     const router = useRouter();
     const { data: session } = useSession();
@@ -59,10 +77,15 @@ function SignIn() {
             return;
         }
 
+        setIsLoadingSpinner(true);
+        setLoadingSpinnerTitle("กำลังเข้าสู่ระบบ");
+
         try {
-            const response = await signIn("credentials", {
-                username, password, redirect: false
-            });
+            const response = await withMinLoadingTime(() =>
+                signIn("credentials", {
+                    username, password, redirect: false
+                })
+            );
 
             if (response.error) {
                 setIsError(true);
@@ -78,6 +101,8 @@ function SignIn() {
             setErrorTitle("เกิดข้อผิดพลาด");
             setErrorDetail("เกิดข้อผิดพลาดขณะเข้าสู่ระบบ กรุณาลองใหม่อีกครั้ง");
             setErrorButton("ลองใหม่อีกครั้ง");
+        } finally {
+            setIsLoadingSpinner(false);
         }
     }
 
@@ -102,6 +127,9 @@ function SignIn() {
             )}
             {isSuccess && (
                 <SuccessAlert title = {successTitle} detail = {successDetail} button = {successButton} onClose = {() => setIsSuccess(false)}/>
+            )}
+            {isLoadingSpinner && (
+                <LoadingSpinnerAlert title = {loadingSpinnerTitle}/>
             )}
         </div>
     )

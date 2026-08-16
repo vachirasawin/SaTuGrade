@@ -15,14 +15,14 @@ function NavbarButton() {
     const { data: session } = useSession();
 
     return (
-        <div className = "flex flex-row max-md:flex-col justify-center items-center gap-4 max-md:w-full">
+        <div className = "flex flex-row max-lg:flex-col justify-center items-center gap-4 max-lg:w-full">
             {ButtonsData.map((button, index) => {
                 if (button.nonuser && session) return null;
                 if (button.user && !session) return null;
                 if (button.admin && session?.user?.access !== "admin") return null;
 
                 return (
-                    <Link key = {index} href = {button.href} className = {`w-max max-md:w-full h-10 flex justify-center items-center shadow-md rounded-md text-sm font-medium px-4 border-2 ${button.borderColor} ${pathname === button.href ? `bg-white ${button.textColor}` : `${button.backgroundColor} text-white`}`}>
+                    <Link key = {index} href = {button.href} className = {`w-max max-lg:w-full h-10 flex justify-center items-center shadow-md rounded-md text-sm font-medium px-4 border-2 ${button.borderColor} ${pathname === button.href ? `bg-white ${button.textColor}` : `${button.backgroundColor} text-white`}`}>
                         {button.label}
                     </Link>
                 )

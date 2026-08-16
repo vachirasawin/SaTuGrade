@@ -14,6 +14,21 @@ import ButtonInput from "./input/ButtonInput"
 import SuccessAlert from "../alert/SuccessAlert"
 import WarningAlert from "../alert/WarningAlert"
 import ErrorAlert from "../alert/ErrorAlert"
+import LoadingSpinnerAlert from "../alert/LoadingSpinnerAlert"
+
+const MIN_LOADING_TIME = 1000;
+
+const withMinLoadingTime = async (task) => {
+    const startTime = Date.now();
+    const result = await task();
+    const elapsedTime = Date.now() - startTime;
+
+    if (elapsedTime < MIN_LOADING_TIME) {
+        await new Promise((resolve) => setTimeout(resolve, MIN_LOADING_TIME - elapsedTime));
+    }
+
+    return result;
+};
 
 function SignUp() {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -30,6 +45,9 @@ function SignUp() {
     const [errorTitle, setErrorTitle] = useState("");
     const [errorDetail, setErrorDetail] = useState("");
     const [errorButton, setErrorButton] = useState("");
+        
+    const [isLoadingSpinner, setIsLoadingSpinner] = useState(false);
+    const [loadingSpinnerTitle, setLoadingSpinnerTitle] = useState("");
     
     const { data: session } = useSession();
     
@@ -83,51 +101,58 @@ function SignUp() {
             return;
         }
 
+        setIsLoadingSpinner(true);
+        setLoadingSpinnerTitle("กำลังบันทึกข้อมูล");
+
         try {
-            const responseCheckUser = await fetch("/api/auth/checkUser", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username
+            await withMinLoadingTime(async () => {
+                const responseCheckUser = await fetch("/api/auth/checkUser", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username
+                    })
                 })
-            })
 
-            const { user } = await responseCheckUser.json();
+                const { user } = await responseCheckUser.json();
 
-            if (user) {
-                setIsError(true);
-                setErrorTitle("ชื่อผู้ใช้งานนี้ถูกใช้งานแล้ว");
-                setErrorDetail("ชื่อผู้ใช้งานนี้มีอยู่ในระบบแล้ว กรุณาตรวจสอบและเปลี่ยนเป็นชื่อผู้ใช้งานอื่น");
-                setErrorButton("ลองใหม่อีกครั้ง");
-                return
-            }
+                if (user) {
+                    setIsError(true);
+                    setErrorTitle("ชื่อผู้ใช้งานนี้ถูกใช้งานแล้ว");
+                    setErrorDetail("ชื่อผู้ใช้งานนี้มีอยู่ในระบบแล้ว กรุณาตรวจสอบและเปลี่ยนเป็นชื่อผู้ใช้งานอื่น");
+                    setErrorButton("ลองใหม่อีกครั้ง");
+                    return
+                }
 
-            const responseCreateUser = await fetch("/api/auth/createUser", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    firstname, lastname, username, email, program , password, access: "user"
-                })
+                const responseCreateUser = await fetch("/api/auth/createUser", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        firstname, lastname, username, email, program , password, access: "user"
+                    })
+                });
+
+                if (responseCreateUser.ok) {
+                    setIsSuccess(true);
+                    setSuccessTitle("สมัครสมาชิกสำเร็จ");
+                    setSuccessDetail("คุณได้ทำการสมัครสมาชิกเรียบร้อยแล้ว สามารถเข้าสู่ระบบเพื่อใช้งานได้ทันที");
+                    setSuccessButton("ตกลง");
+                    clearFormState();
+                } else {
+                    throw new Error("Failed to create user");
+                }
             });
-
-            if (responseCreateUser.ok) {
-                setIsSuccess(true);
-                setSuccessTitle("สมัครสมาชิกสำเร็จ");
-                setSuccessDetail("คุณได้ทำการสมัครสมาชิกเรียบร้อยแล้ว สามารถเข้าสู่ระบบเพื่อใช้งานได้ทันที");
-                setSuccessButton("ตกลง");
-                clearFormState();
-            } else {
-                throw new Error("Failed to create user");
-            }
         } catch(error) {
             setIsError(true);
             setErrorTitle("เกิดข้อผิดพลาด");
             setErrorDetail("เกิดข้อผิดพลาดขณะสมัครสมาชิก กรุณาลองใหม่อีกครั้ง");
             setErrorButton("ลองใหม่อีกครั้ง");
+        } finally {
+            setIsLoadingSpinner(false);
         }
     }
 
@@ -165,6 +190,9 @@ function SignUp() {
             )}
             {isSuccess && (
                 <SuccessAlert title = {successTitle} detail = {successDetail} button = {successButton} onClose = {() => setIsSuccess(false)}/>
+            )}
+            {isLoadingSpinner && (
+                <LoadingSpinnerAlert title = {loadingSpinnerTitle}/>
             )}
         </div>
     )
