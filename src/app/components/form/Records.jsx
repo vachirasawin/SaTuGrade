@@ -121,8 +121,11 @@ function Records({ id }) {
                 const creditKey = `${subject.program}_${t}_Credit`;
                 const gradeKey = `${subject.program}_${t}_Grade`;
 
-                payload[creditKey] = recordData[creditKey] ?? 0;
-                payload[gradeKey] = recordData[gradeKey] ?? 0;
+                const creditVal = recordData[creditKey];
+                const gradeVal = recordData[gradeKey];
+
+                payload[creditKey] = creditVal;
+                payload[gradeKey] = gradeVal;
             });
         }
         return payload;
@@ -211,13 +214,19 @@ function Records({ id }) {
                     </div>
                 </div>
                 {currentSubjects.map((subject, index) => {
-                        const creditKey = `${subject.program}_${currentId}_Credit`;
-                        const gradeKey = `${subject.program}_${currentId}_Grade`;
+                    const creditKey = `${subject.program}_${currentId}_Credit`;
+                    const gradeKey = `${subject.program}_${currentId}_Grade`;
 
-                        return (
-                            <RecordInput key = {index} symbol = {subject.symbol} title = {subject.title} placeholder = {subject.placeholder}creditValue = {recordData[creditKey]}gradeValue = {recordData[gradeKey]}onCreditChange={(e) => handleInputChange(subject.program, currentId, "Credit", e.target.value)}onGradeChange={(e) => handleInputChange(subject.program, currentId, "Grade", e.target.value)}request/>
-                        );
-                    })}
+                    const rawCredit = recordData[creditKey];
+                    const rawGrade = recordData[gradeKey];
+
+                    const displayCredit = (rawCredit === 0 || rawCredit === null || rawCredit === undefined) ? "" : rawCredit;
+                    const displayGrade = (rawGrade === 0 || rawGrade === null || rawGrade === undefined) ? "" : rawGrade;
+
+                    return (
+                        <RecordInput key = {index} symbol = {subject.symbol} title = {subject.title} placeholder = {subject.placeholder} creditValue = {displayCredit} gradeValue = {displayGrade} onCreditChange={(e) => handleInputChange(subject.program, currentId, "Credit", e.target.value)} onGradeChange={(e) => handleInputChange(subject.program, currentId, "Grade", e.target.value)} request/>
+                    );
+                })}
                 <div className = "flex gap-4 max-lg:flex-col">
                     <ButtonInput title = "บันทึกข้อมูล" type = "submit" width = "w-full" color = "text-blue-500 hover:bg-blue-500"/>
                     <ButtonInput title = "ยกเลิกการบันทึกข้อมูล" type = "reset" width = "w-full" color = "text-red-500 hover:bg-red-500"/>
