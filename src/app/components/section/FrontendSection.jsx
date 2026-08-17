@@ -2,7 +2,7 @@ import React from "react"
 
 import CardList from "../card/CardList"
 
-import { frontend } from "../../utils/frontendData"
+import { frontend } from "../../utils/card/frontendData"
 
 function FrontendSection() {
     const frontendData = frontend;

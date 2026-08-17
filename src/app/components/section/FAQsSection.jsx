@@ -2,7 +2,7 @@ import React from "react"
 
 import CardList from "../card/CardList";
 
-import { FAQs } from "../../utils/FAQsData"
+import { FAQs } from "../../utils/card/FAQsData"
 
 function FAQsSection() {
     const FAQsData = FAQs;

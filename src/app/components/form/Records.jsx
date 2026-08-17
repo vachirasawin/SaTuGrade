@@ -13,22 +13,9 @@ import WarningAlert from "../alert/WarningAlert"
 import ErrorAlert from "../alert/ErrorAlert"
 import LoadingSpinnerAlert from "../alert/LoadingSpinnerAlert"
 
-import { terms } from "../../utils/termsData"
+import { terms, maxInputTerm } from "../../utils/termsData"
 import { subjects } from "../../utils/subjectsData"
-
-const MIN_LOADING_TIME = 1000;
-
-const withMinLoadingTime = async (task) => {
-    const startTime = Date.now();
-    const result = await task();
-    const elapsedTime = Date.now() - startTime;
-
-    if (elapsedTime < MIN_LOADING_TIME) {
-        await new Promise((resolve) => setTimeout(resolve, MIN_LOADING_TIME - elapsedTime));
-    }
-
-    return result;
-};
+import { withMinLoadingTime, formatDataForModel, isCurrentTermIncomplete, getDisplayValue } from "../../utils/records"
 
 function Records({ id }) {
     const [isSuccess, setIsSuccess] = useState(false);
@@ -54,10 +41,13 @@ function Records({ id }) {
     if (!session) redirect("/");
 
     const currentId = Number(id);
+
+    if (currentId > maxInputTerm) redirect(`/records/${maxInputTerm}`);
+
     const currentTerm = terms[currentId];
     const prevId = currentId - 1;
     const nextId = currentId + 1;
-    const maxTerm = Object.keys(terms).length;
+    const maxTerm = maxInputTerm;
 
     const modelType = session.user.program;
     const currentSubjects = subjects[modelType];
@@ -114,23 +104,6 @@ function Records({ id }) {
         });
     };
 
-    const formatDataForModel = () => {
-        const payload = {};
-        for (let t = 1; t <= maxTerm; t++) {
-            currentSubjects.forEach(subject => {
-                const creditKey = `${subject.program}_${t}_Credit`;
-                const gradeKey = `${subject.program}_${t}_Grade`;
-
-                const creditVal = recordData[creditKey];
-                const gradeVal = recordData[gradeKey];
-
-                payload[creditKey] = creditVal;
-                payload[gradeKey] = gradeVal;
-            });
-        }
-        return payload;
-    };
-
     const handleReset = (e) => {
         e.preventDefault();
         setRecordData({});
@@ -140,20 +113,7 @@ function Records({ id }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const isCurrentTermIncomplete = currentSubjects.some(subject => {
-            const creditKey = `${subject.program}_${currentId}_Credit`;
-            const gradeKey = `${subject.program}_${currentId}_Grade`;
-
-            const creditVal = recordData[creditKey];
-            const gradeVal = recordData[gradeKey];
-
-            const isCreditEmpty = creditVal === undefined || creditVal === null || creditVal === "";
-            const isGradeEmpty = gradeVal === undefined || gradeVal === null || gradeVal === "";
-
-            return isCreditEmpty || isGradeEmpty;
-        });
-
-        if (isCurrentTermIncomplete) {
+        if (isCurrentTermIncomplete(recordData, currentSubjects, currentId)) {
             setIsWarning(true);
             setWarningTitle("กรอกข้อมูลไม่ครบถ้วน");
             setWarningDetail("กรุณากรอกข้อมูลในช่องที่มีเครื่องหมายสำคัญให้ครบถ้วนก่อนยืนยัน");
@@ -161,7 +121,7 @@ function Records({ id }) {
             return;
         }
 
-        const payload = formatDataForModel();
+        const payload = formatDataForModel(recordData, currentSubjects, maxTerm);
 
         setIsLoadingSpinner(true);
         setLoadingSpinnerTitle("กำลังบันทึกข้อมูล");
@@ -217,11 +177,8 @@ function Records({ id }) {
                     const creditKey = `${subject.program}_${currentId}_Credit`;
                     const gradeKey = `${subject.program}_${currentId}_Grade`;
 
-                    const rawCredit = recordData[creditKey];
-                    const rawGrade = recordData[gradeKey];
-
-                    const displayCredit = (rawCredit === 0 || rawCredit === null || rawCredit === undefined) ? "" : rawCredit;
-                    const displayGrade = (rawGrade === 0 || rawGrade === null || rawGrade === undefined) ? "" : rawGrade;
+                    const displayCredit = getDisplayValue(recordData[creditKey]);
+                    const displayGrade = getDisplayValue(recordData[gradeKey]);
 
                     return (
                         <RecordInput key = {index} symbol = {subject.symbol} title = {subject.title} placeholder = {subject.placeholder} creditValue = {displayCredit} gradeValue = {displayGrade} onCreditChange={(e) => handleInputChange(subject.program, currentId, "Credit", e.target.value)} onGradeChange={(e) => handleInputChange(subject.program, currentId, "Grade", e.target.value)} request/>

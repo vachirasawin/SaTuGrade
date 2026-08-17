@@ -2,7 +2,7 @@ import React from "react"
 
 import CardList from "../card/CardList"
 
-import { backend } from "../../utils/backendData"
+import { backend } from "../../utils/card/backendData"
 
 function BackendSection() {
     const backendData = backend;

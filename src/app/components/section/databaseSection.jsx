@@ -2,7 +2,7 @@ import React from "react"
 
 import CardList from "../card/CardList"
 
-import { database } from "../../utils/databaseData"
+import { database } from "../../utils/card/databaseData"
 
 function DatabaseSection() {
     const databaseData = database;
