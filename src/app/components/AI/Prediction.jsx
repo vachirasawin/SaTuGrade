@@ -220,4 +220,4 @@ function Prediction() {
     )
 }
 
-export default Prediction
+export default Predictionq
