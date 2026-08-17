@@ -2,7 +2,7 @@ import React from "react"
 
 import CardList from "../card/CardList"
 
-import { deployment } from "../../utils/deploymentData"
+import { deployment } from "../../utils/card/deploymentData"
 
 function DeploymentSection() {
     const deploymentData = deployment;

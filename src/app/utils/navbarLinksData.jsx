@@ -4,12 +4,12 @@ export const navbarLinks = [
         label: "หน้าหลัก"
     },
     {
-        href: "/#manual",
-        label: "วิธีการใช้งาน"
-    },
-    {
         href: "/#faqs",
         label: "คำถามที่พบบ่อย"
+    },
+    {
+        href: "/#manual",
+        label: "วิธีการใช้งาน"
     },
     {
         href: "/records/1",
