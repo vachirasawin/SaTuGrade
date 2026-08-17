@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react"
 import { redirect } from "next/navigation"
 import { useSession } from "next-auth/react"
 
-import { terms } from "../../utils/termsData";
+import { terms, maxInputTerm } from "../../utils/termsData";
 import { subjects } from "../../utils/subjectsData";
 import { programs } from "../../utils/programsData";
 
@@ -165,7 +165,7 @@ function Prediction() {
                         <p className = "text-xl font-bold mb-2">ผลการพยากรณ์ของผลการเรียน</p>
                         <div>
                             <p className = "text-gray-400">
-                                ข้อมูลที่คุณกรอกแล้ว: <span className = "font-semibold text-blue-500">{recordedTermsCount}</span> / {maxTerm} เทอม
+                                ข้อมูลที่คุณกรอกแล้ว: <span className = "font-semibold text-blue-500">{recordedTermsCount}</span> / {maxInputTerm} เทอม
                             </p>
                             {targetTermId >= 2 ? (
                                 <p className = "text-gray-400">

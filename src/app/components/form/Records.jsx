@@ -13,7 +13,7 @@ import WarningAlert from "../alert/WarningAlert"
 import ErrorAlert from "../alert/ErrorAlert"
 import LoadingSpinnerAlert from "../alert/LoadingSpinnerAlert"
 
-import { terms } from "../../utils/termsData"
+import { terms, maxInputTerm } from "../../utils/termsData"
 import { subjects } from "../../utils/subjectsData"
 import { withMinLoadingTime, formatDataForModel, isCurrentTermIncomplete, getDisplayValue } from "../../utils/records"
 
@@ -41,10 +41,13 @@ function Records({ id }) {
     if (!session) redirect("/");
 
     const currentId = Number(id);
+
+    if (currentId > maxInputTerm) redirect(`/records/${maxInputTerm}`);
+
     const currentTerm = terms[currentId];
     const prevId = currentId - 1;
     const nextId = currentId + 1;
-    const maxTerm = Object.keys(terms).length;
+    const maxTerm = maxInputTerm;
 
     const modelType = session.user.program;
     const currentSubjects = subjects[modelType];
