@@ -11,3 +11,9 @@ jobs:
     steps:
       - name: Ping SM model API
         run: curl -sf https://sm-model-api.onrender.com/ || echo "SM ping failed"
+
+      - name: Ping AL model API
+        run: curl -sf https://al-model-api.onrender.com/ || echo "AL ping failed"
+
+      - name: Ping AC model API
+        run: curl -sf https://ac-model-api.onrender.com/ || echo "AC ping failed"

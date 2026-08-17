@@ -1,6 +1,6 @@
 import React from "react"
 
-function Accuracy() {
+function Dataset() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function Accuracy() {
     )
 }
 
-export default Accuracy
+export default Dataset
