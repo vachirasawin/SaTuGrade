@@ -12,7 +12,7 @@ import DeploymentSection from "./components/section/DeploymentSection"
 import Project from "./components/detail/Project"
 import Dataset from "./components/detail/Dataset"
 import Model from "./components/detail/Model"
-import Accuracy from "./components/detail/Accuracy"
+import AccuracySection from "./components/section/AccuracySection"
 
 async function page() {
     return (
@@ -26,7 +26,7 @@ async function page() {
             <Banner title = "ระบบปัญญาประดิษฐ์สำหรับพยากรณ์แนวโน้มผลการเรียนวิชาหลักเฉพาะสายการเรียน" image = "/ai.jpg"/>
             <Dataset/>
             <Model/>
-            <Accuracy/>
+            <AccuracySection/>
             <FrontendSection/>
             <BackendSection/>
             <DatabaseSection/>
