@@ -161,7 +161,7 @@ function Prediction() {
         <div id = "predicted">
             <div className = "w-full border-b border-gray-200 px-4 py-18 max-lg:py-6">
                 <div className = "container mx-auto flex flex-col gap-8 max-md:gap-4">
-                    <div className="bg-white p-8 max-lg:p-4 rounded-xl shadow-md flex flex-col gap-4">
+                    <div className = "bg-white p-8 max-lg:p-4 rounded-xl shadow-md flex flex-col gap-4">
                         <p className = "text-xl font-bold mb-2">ผลการพยากรณ์ของผลการเรียน</p>
                         <div>
                             <p className = "text-gray-400">

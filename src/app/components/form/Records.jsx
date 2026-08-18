@@ -92,8 +92,8 @@ function Records({ id }) {
         fetchSavedRecord();
     }, [session]);
 
-    const handleInputChange = (program, term, type, value) => {
-        const key = `${program}_${term}_${type}`;
+    const handleInputChange = (code, term, type, value) => {
+        const key = `${code}_${term}_${type}`;
         setRecordData(prev => {
             const updated = {
                 ...prev,
@@ -174,14 +174,14 @@ function Records({ id }) {
                     </div>
                 </div>
                 {currentSubjects.map((subject, index) => {
-                    const creditKey = `${subject.program}_${currentId}_Credit`;
-                    const gradeKey = `${subject.program}_${currentId}_Grade`;
+                    const creditKey = `${subject.code}_${currentId}_Credit`;
+                    const gradeKey = `${subject.code}_${currentId}_Grade`;
 
                     const displayCredit = getDisplayValue(recordData[creditKey]);
                     const displayGrade = getDisplayValue(recordData[gradeKey]);
 
                     return (
-                        <RecordInput key = {index} symbol = {subject.symbol} title = {subject.title} placeholder = {subject.placeholder} creditValue = {displayCredit} gradeValue = {displayGrade} onCreditChange={(e) => handleInputChange(subject.program, currentId, "Credit", e.target.value)} onGradeChange={(e) => handleInputChange(subject.program, currentId, "Grade", e.target.value)} request/>
+                        <RecordInput key = {index} symbol = {subject.symbol} title = {subject.title} placeholder = {subject.placeholder} creditValue = {displayCredit} gradeValue = {displayGrade} onCreditChange={(e) => handleInputChange(subject.code, currentId, "Credit", e.target.value)} onGradeChange={(e) => handleInputChange(subject.code, currentId, "Grade", e.target.value)} request/>
                     );
                 })}
                 <div className = "flex gap-4 max-lg:flex-col">
