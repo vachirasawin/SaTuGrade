@@ -7,7 +7,7 @@ import { FAQs } from "../../utils/card/FAQsData"
 function FAQsSection() {
     return (
         <div id = "faqs">
-            <CardList title = "คำถามที่พบบ่อย" cardsData = {FAQs}/>
+            <CardList title = {<><span className = "text-blue-500">คำถาม</span>ที่พบบ่อย</>} cardsData = {FAQs}/>
         </div>
     )
 }

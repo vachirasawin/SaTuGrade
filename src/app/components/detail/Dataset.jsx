@@ -9,7 +9,7 @@ function Dataset() {
 
     return (
         <div id = "dataset">
-            <CardList title = "ข้อมูลสำหรับการสอนปัญญาประดิษฐ์" cardsData = {datasetData}/>
+            <CardList title = {<>ข้อมูลสำหรับการ<span className = "text-blue-500">สอนปัญญาประดิษฐ์</span></>} cardsData = {datasetData}/>
         </div>
     )
 }

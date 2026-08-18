@@ -16,7 +16,7 @@ function Card({ datas }) {
                         <Image src = {datas.image} alt = {datas.title} fill className = "object-contain max-w-6 max-h-6 mx-auto my-auto"/>
                     </div>
                 }
-                <p className = "text-xl max-lg:text-lg font-bold">{datas.title}</p>
+                <p className = "text-xl max-lg:text-lg font-bold" dangerouslySetInnerHTML = {{ __html: datas.title }}></p>
             </div>
             <p className = "flex-1 text-base font-medium text-gray-400 max-lg:text-sm break-words overflow-y-auto styleScrollbar">{datas.detail}</p>
             <div className = "mt-auto flex justify-start items-center gap-2">

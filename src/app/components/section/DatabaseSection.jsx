@@ -7,7 +7,7 @@ import { database } from "../../utils/card/databaseData"
 function DatabaseSection() {
     return (
         <div id = "database">
-            <CardList title = "เทคโนโลยีที่ใช้สำหรับ Database" cardsData = {database}/>
+            <CardList title = {<>เทคโนโลยีที่ใช้สำหรับ <span className = "text-blue-500">&nbsp;Database</span></>} cardsData = {database}/>
         </div>
     )
 }
