@@ -5,11 +5,9 @@ import CardList from "../card/CardList"
 import { deployment } from "../../utils/card/deploymentData"
 
 function DeploymentSection() {
-    const deploymentData = deployment;
-
     return (
         <div id = "deployment">
-            <CardList title = "เทคโนโลยีที่ใช้สำหรับ Deployment" cardsData = {deploymentData}/>
+            <CardList title = "เทคโนโลยีที่ใช้สำหรับ Deployment" cardsData = {deployment}/>
         </div>
     )
 }
