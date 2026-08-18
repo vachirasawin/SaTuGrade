@@ -67,7 +67,7 @@
 ```
 ## **AI Model for Prediction System**
 - ทำหน้าที่พยากรณ์ผลการเรียนในเทอมถัดไปของผู้ใช้จากข้อมูลผลการเรียนทั้งหมด
-- Supervised Learning แบบ Classification โดนใช้เทคนิค XGBClassifier
+- Supervised Learning แบบ Classification โดนใช้เทคนิค XGBRegressor
 - รับข้อมูลสำหรับการพยากรณ์ผลการเรียนเป็นผลการเรียนของผู้ใช้ในแต่ละรายวิชาที่จัดหมวดหมู่ไว้แล้วร่วมกับหน่วยกิต
 ```
 {

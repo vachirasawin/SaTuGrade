@@ -25,6 +25,11 @@ function Card({ datas }) {
                         {data[0]}
                     </Link>
                 ))}
+                {datas.button && datas.button.map((data, index) => (
+                    <div key = {index} href = {data} className = "rounded-sm shadow-sm w-max h-7 flex justify-center items-center bg-white border border-gray-200 text-sm font-semibold text-blue-500 px-4 py-1 hover:border-blue-500 hover:text-white hover:bg-blue-500 transition-all duration-200">
+                        {data}
+                    </div>
+                ))}
             </div>
         </div>
     )
