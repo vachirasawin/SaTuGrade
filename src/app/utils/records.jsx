@@ -17,8 +17,8 @@ export const formatDataForModel = (recordData, currentSubjects, maxTerm) => {
 
     for (let t = 1; t <= maxTerm; t++) {
         currentSubjects.forEach(subject => {
-            const creditKey = `${subject.program}_${t}_Credit`;
-            const gradeKey = `${subject.program}_${t}_Grade`;
+            const creditKey = `${subject.code}_${t}_Credit`;
+            const gradeKey = `${subject.code}_${t}_Grade`;
 
             payload[creditKey] = recordData[creditKey];
             payload[gradeKey] = recordData[gradeKey];
@@ -29,18 +29,29 @@ export const formatDataForModel = (recordData, currentSubjects, maxTerm) => {
 };
 
 export const isCurrentTermIncomplete = (recordData, currentSubjects, currentId) => {
-    return currentSubjects.some(subject => {
-        const creditKey = `${subject.program}_${currentId}_Credit`;
-        const gradeKey = `${subject.program}_${currentId}_Grade`;
+    let hasAtLeastOneSubject = false;
+    let hasIncompleteSubject = false;
+
+    currentSubjects.forEach(subject => {
+        const creditKey = `${subject.code}_${currentId}_Credit`;
+        const gradeKey = `${subject.code}_${currentId}_Grade`;
 
         const creditVal = recordData[creditKey];
         const gradeVal = recordData[gradeKey];
 
-        const isCreditEmpty = creditVal === undefined || creditVal === null || creditVal === "";
-        const isGradeEmpty = gradeVal === undefined || gradeVal === null || gradeVal === "";
+        const isCreditFilled = creditVal !== undefined && creditVal !== null && creditVal !== "";
+        const isGradeFilled = gradeVal !== undefined && gradeVal !== null && gradeVal !== "";
 
-        return isCreditEmpty || isGradeEmpty;
+        if (isCreditFilled || isGradeFilled) {
+            hasAtLeastOneSubject = true;
+
+            if (!isCreditFilled || !isGradeFilled) {
+                hasIncompleteSubject = true;
+            }
+        }
     });
+
+    return !hasAtLeastOneSubject || hasIncompleteSubject;
 };
 
 export const getDisplayValue = (rawValue) => {

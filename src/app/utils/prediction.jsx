@@ -10,8 +10,8 @@ export const buildMockRecordData = (currentSubjects) => {
     const mockRecord = {};
 
     currentSubjects.forEach(subject => {
-        mockRecord[`${subject.program}_1_Credit`] = 3;
-        mockRecord[`${subject.program}_1_Grade`] = MOCK_RECORDED_GRADE;
+        mockRecord[`${subject.code}_1_Credit`] = 3;
+        mockRecord[`${subject.code}_1_Grade`] = MOCK_RECORDED_GRADE;
     });
 
     return mockRecord;
@@ -21,7 +21,7 @@ export const buildMockPredictions = (currentSubjects) => {
     const mockPredictions = {};
 
     currentSubjects.forEach(subject => {
-        mockPredictions[subject.program] = MOCK_PREDICTED_GRADE;
+        mockPredictions[subject.code] = MOCK_PREDICTED_GRADE;
     });
 
     return mockPredictions;
@@ -44,8 +44,8 @@ export const getRecordedTermsCount = (data, currentSubjects, maxTerm) => {
 
     for (let t = 1; t <= maxTerm; t++) {
         const isTermComplete = currentSubjects.every(subject => {
-            const creditKey = `${subject.program}_${t}_Credit`;
-            const gradeKey = `${subject.program}_${t}_Grade`;
+            const creditKey = `${subject.code}_${t}_Credit`;
+            const gradeKey = `${subject.code}_${t}_Grade`;
 
             const creditVal = data[creditKey];
             const gradeVal = data[gradeKey];
@@ -69,7 +69,7 @@ export const getRecordedTermsCount = (data, currentSubjects, maxTerm) => {
 export const getLatestGrade = (subject, data, latestTerm) => {
     if (!latestTerm || latestTerm < 1) return null;
 
-    const gradeKey = `${subject.program}_${latestTerm}_Grade`;
+    const gradeKey = `${subject.code}_${latestTerm}_Grade`;
     const gradeVal = data[gradeKey];
 
     if (gradeVal === undefined || gradeVal === null || gradeVal === "") return null;
@@ -80,7 +80,7 @@ export const getLatestGrade = (subject, data, latestTerm) => {
 
 export const getSuggestionSubjects = (currentSubjects, predictions) => {
     return currentSubjects.reduce((result, subject) => {
-        const predictedGrade = predictions[subject.program];
+        const predictedGrade = predictions[subject.code];
 
         if (predictedGrade !== undefined && predictedGrade <= SUGGESTION_THRESHOLD) {
             result.push({ subject, predictedGrade });
@@ -92,7 +92,7 @@ export const getSuggestionSubjects = (currentSubjects, predictions) => {
 
 export const getCautionSubjects = (currentSubjects, predictions, recordData, latestTerm) => {
     return currentSubjects.reduce((result, subject) => {
-        const predictedGrade = predictions[subject.program];
+        const predictedGrade = predictions[subject.code];
         if (predictedGrade === undefined) return result;
 
         const latestGrade = getLatestGrade(subject, recordData, latestTerm);
