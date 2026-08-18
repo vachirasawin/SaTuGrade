@@ -140,7 +140,7 @@ function Prediction() {
             );
         }
 
-        const predictedGrade = predictions[subject.program];
+        const predictedGrade = predictions[subject.code];
 
         if (predictedGrade === undefined) {
             return (
