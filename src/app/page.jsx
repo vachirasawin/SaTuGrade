@@ -5,14 +5,15 @@ import Banner from "./components/Banner"
 import SubjectsSection from "./components/section/SubjectsSection"
 import ManualsSection from "./components/section/ManualsSection"
 import FAQsSection from "./components/section/FAQsSection"
-import FrontendSection from "./components/section/FrontendSection"
-import BackendSection from "./components/section/BackendSection"
-import DatabaseSection from "./components/section/databaseSection"
-import DeploymentSection from "./components/section/DeploymentSection"
 import Project from "./components/detail/Project"
 import Dataset from "./components/detail/Dataset"
 import Model from "./components/detail/Model"
 import AccuracySection from "./components/section/AccuracySection"
+import AccuracyDescription from "./components/section/AccuracyDescription"
+import FrontendSection from "./components/section/FrontendSection"
+import BackendSection from "./components/section/BackendSection"
+import DatabaseSection from "./components/section/databaseSection"
+import DeploymentSection from "./components/section/DeploymentSection"
 
 async function page() {
     return (
@@ -27,6 +28,7 @@ async function page() {
             <Dataset/>
             <Model/>
             <AccuracySection/>
+            <AccuracyDescription/>
             <FrontendSection/>
             <BackendSection/>
             <DatabaseSection/>

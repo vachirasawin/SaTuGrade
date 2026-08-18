@@ -58,24 +58,30 @@ function Records({ id }) {
     useEffect(() => {
         const fetchSavedRecord = async () => {
             const userId = session?.user?.id || session?.user?.email;
-            if (!userId) return;
+
+            if (!userId) {
+                setRecordData({});
+                return;
+            }
+
+            const storageKey = `record_data_${userId}`;
 
             setIsLoadingSpinner(true);
             setLoadingSpinnerTitle("กำลังโหลดข้อมูล");
 
             try {
                 await withMinLoadingTime(async () => {
-                    const response = await fetch(`/api/record/createRecord?userId=${encodeURIComponent(userId)}`);
+                    const response = await fetch(`/api/record/createRecord?userId=${encodeURIComponent(userId)}`,
+                        { cache: 'no-store' }
+                    );
                     const data = await response.json();
 
                     if (response.ok && data.recordData && Object.keys(data.recordData).length > 0) {
                         setRecordData(data.recordData);
                         localStorage.setItem("record_data", JSON.stringify(data.recordData));
                     } else {
-                        const savedLocal = localStorage.getItem("record_data");
-                        if (savedLocal) {
-                            setRecordData(JSON.parse(savedLocal));
-                        }
+                        const savedLocal = localStorage.getItem(storageKey);
+                        setRecordData(savedLocal ? JSON.parse(savedLocal) : {});
                     }
                 });
             } catch (error) {
@@ -90,7 +96,7 @@ function Records({ id }) {
         };
 
         fetchSavedRecord();
-    }, [session]);
+    }, [session?.user?.id, session?.user?.email]);
 
     const handleInputChange = (code, term, type, value) => {
         const key = `${code}_${term}_${type}`;
