@@ -7,7 +7,7 @@ import { frontend } from "../../utils/card/frontendData"
 function FrontendSection() {
     return (
         <div id = "frontend">
-            <CardList title = "เทคโนโลยีที่ใช้สำหรับ Frontend" cardsData = {frontend}/>
+            <CardList title = {<>เทคโนโลยีที่ใช้สำหรับ <span className = "text-blue-500">&nbsp;Frontend</span></>} cardsData = {frontend}/>
         </div>
     )
 }

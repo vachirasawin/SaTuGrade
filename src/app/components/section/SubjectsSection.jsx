@@ -19,7 +19,9 @@ function SubjectsSection() {
         <div id = "subjects">
             <div className = "w-full h-max bg-neutral-50 px-4 py-18 max-lg:py-6 border-b border-gray-200 flex flex-col gap-12 max-lg:gap-4">
                 <p className = "container mx-auto flex justify-center items-center text-3xl max-lg:text-2xl font-bold">
-                    ข้อมูลรายวิชาหลักในแต่ละสายการเรียน
+                    ข้อมูล
+                    <span className = "text-blue-500">รายวิชาหลัก</span>
+                    ในแต่ละสายการเรียน
                 </p>
                 <div className = "container mx-auto flex flex-col gap-8 max-md:gap-4">
                     <div className = "bg-white p-8 max-lg:p-4 rounded-xl shadow-md flex flex-col gap-4">
