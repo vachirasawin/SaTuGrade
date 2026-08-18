@@ -4,7 +4,7 @@ export const accuracy = [
         title: "สายการเรียนวิทย์-คณิต",
         detail: "",
         width: "w-[442px]",
-        height: "h-[256px]",
+        height: "h-[296px]",
         button: [
             "XXX%"
         ]
@@ -14,7 +14,7 @@ export const accuracy = [
         title: "สายการเรียนศิลป์-ภาษา",
         detail: "",
         width: "w-[442px]",
-        height: "h-[256px]",
+        height: "h-[296px]",
         button: [
             "XXX%"
         ]
@@ -24,7 +24,7 @@ export const accuracy = [
         title: "สายการเรียนศิลป์-คำนวณ",
         detail: "",
         width: "w-[442px]",
-        height: "h-[256px]",
+        height: "h-[296px]",
         button: [
             "XXX%"
         ]
