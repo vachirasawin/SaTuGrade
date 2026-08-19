@@ -29,6 +29,7 @@ async function page() {
             <Model/>
             <AccuracySection/>
             <AccuracyDescription/>
+            <Banner title = "เทคโนโลยีที่ใช้ในการพัฒนาเว็บแอปพลิเคชันและปัญญาประดิษฐ์" image = "/technology.jpg"/>
             <FrontendSection/>
             <BackendSection/>
             <DatabaseSection/>
