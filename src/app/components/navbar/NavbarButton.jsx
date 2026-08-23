@@ -4,7 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
-import NavbarSignOut from "./NavbarSignOut";
+import NavbarSession from "./NavbarSession";
 
 function NavbarButton() {
     const ButtonsData = [
@@ -27,7 +27,7 @@ function NavbarButton() {
                     </Link>
                 )
             })}
-            <NavbarSignOut/>
+            <NavbarSession/>
         </div>
     )
 }

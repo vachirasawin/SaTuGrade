@@ -15,13 +15,13 @@ function Project() {
                     </div>
                     <div className = "text-gray-400">
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien.
+                            เว็บแอปพลิเคชันสำหรับพยากรณ์ผลการเรียนเทอมถัดไป เฉพาะรายวิชาหลักในสายการเรียนของผู้ใช้ 
                         </p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien.
+                            โดยใช้แบบจำลองปัญญาประดิษฐ์แบบ Ridge Regression ซึ่งเป็น Machine Learning แบบ Supervised Learning
                         </p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien.
+                            ใช้งานง่ายเพียงแค่ผู้ใช้สมัครสมาชิกและกรอกข้อมูลผลการเรียน ก็สามารถพยากรณ์ผลการเรียนในเทอมถัดไปได้แล้ว
                         </p>
                     </div>
                     <div className = "w-full flex gap-4 max-lg:gap-2 max-lg:flex-col">
@@ -30,7 +30,7 @@ function Project() {
                     </div>
                 </div>
                 <div className = "relative w-lg max-lg:w-full h-84 max-lg:h-72">
-                    <Image src = "/project.png" alt = "Project" fill className = "object-cover rounded-xl shadow-md"/>
+                    <Image src = "/project.jpg" alt = "Project" fill className = "object-cover rounded-xl shadow-md"/>
                 </div>
             </div>
         </div>
