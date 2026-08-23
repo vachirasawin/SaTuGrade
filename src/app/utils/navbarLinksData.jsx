@@ -8,10 +8,6 @@ export const navbarLinks = [
         label: "วิธีการใช้งาน"
     },
     {
-        href: "/#faqs",
-        label: "คำถามที่พบบ่อย"
-    },
-    {
         href: "/records/1",
         label: "เพิ่มข้อมูล",
         matchPrefix: "/records",
