@@ -11,42 +11,40 @@ export const FAQs = [
     },
     {
         symbol: "fa-regular fa-circle-question",
-        title: "Lorem ipsum",
-        detail: "Lorem ipsum",
+        title: "ฉันต้องมีผลการเรียนอย่างน้อยกี่เทอม?",
+        detail: "คุณมีเพียงแค่ผลการเรียนเทอมเดียวก็สามารถพยากรณ์ผลการเรียนเทอมถัดไปได้",
         width: "w-[442px]",
         height: "h-[296px]",
         url: [
-            [ "Lorem ipsum", "/" ]
         ]
     },
     {
         symbol: "fa-regular fa-circle-question",
-        title: "Lorem ipsum",
-        detail: "Lorem ipsum",
+        title: "ผลการพยากรณ์ผลการเรียนมีความแม่นยำมากน้อยแค่ไหน?",
+        detail: "ระบบใช้โมเดลวิเคราะห์ข้อมูลการเรียนที่ผ่านมา ทำให้ผลลัพธ์เป็นค่าประมาณการใกล้เคียง ไม่ใช่เกรดจริงจากทางสถาบัน",
         width: "w-[442px]",
         height: "h-[296px]",
         url: [
-            [ "Lorem ipsum", "/" ]
+            [ "ความแม่นยำของการพยากรณ์", "/#accuracy" ]
         ]
     },
     {
         symbol: "fa-regular fa-circle-question",
-        title: "Lorem ipsum",
-        detail: "Lorem ipsum",
+        title: "ข้อมูลผลการเรียนของฉันจะถูกเก็บเป็นความลับหรือไม่?",
+        detail: "ข้อมูลของคุณจะถูกใช้เพื่อการคำนวณเท่านั้น และไม่มีการเปิดเผยข้อมูลส่วนบุคคลแก่บุคคลภายนอก",
         width: "w-[442px]",
         height: "h-[296px]",
         url: [
-            [ "Lorem ipsum", "/" ]
         ]
     },
     {
         symbol: "fa-regular fa-circle-question",
-        title: "Lorem ipsum",
-        detail: "Lorem ipsum",
+        title: "ฉันสามารถแก้ไขข้อมูลผลการเรียนได้ไหม?",
+        detail: "คุณสามารถแก้ไขข้อมูลผลการเรียนได้ในหน้าเพิ่มข้อมูล",
         width: "w-[442px]",
         height: "h-[296px]",
         url: [
-            [ "Lorem ipsum", "/" ]
+            [ "เพิ่มข้อมูล", "/records/1" ]
         ]
     }
 ]
